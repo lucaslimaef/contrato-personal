@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Contrato de Personal Training · Lucas Lima</title>
+<style>
+  :root{
+    --roxo:#6d28d9; --roxo2:#a855f7; --neon:#c084fc;
+    --tinta:#1c1430; --cinza:#6b647a; --linha:#e7e1f2; --bg:#f6f3fc; --branco:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--tinta); background:var(--bg); line-height:1.6;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 140px}
+
+  /* Cabeçalho */
+  .topo{
+    background:linear-gradient(135deg,#4c1d95,#7c3aed 55%,#a855f7);
+    color:#fff;border-radius:0 0 26px 26px;padding:30px 22px 26px;
+    box-shadow:0 14px 40px rgba(124,58,237,.32);
+  }
+  .topo .marca{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:.85;font-weight:700}
+  .topo h1{margin:8px 0 4px;font-size:23px;font-weight:800;line-height:1.25}
+  .topo p{margin:0;font-size:14px;opacity:.9}
+
+  /* Cartões de secção */
+  .card{
+    background:var(--branco);border-radius:18px;padding:20px 20px 18px;margin-top:16px;
+    box-shadow:0 6px 22px rgba(70,40,120,.07);border:1px solid var(--linha);
+  }
+  .card h2{
+    font-size:14px;text-transform:uppercase;letter-spacing:1.2px;color:var(--roxo);
+    margin:0 0 14px;font-weight:800;display:flex;align-items:center;gap:8px;
+  }
+  .card h2 .n{
+    background:linear-gradient(135deg,var(--roxo),var(--roxo2));color:#fff;
+    width:24px;height:24px;border-radius:8px;display:inline-flex;align-items:center;
+    justify-content:center;font-size:12px;flex:none;
+  }
+  p.txt{margin:0 0 11px;text-align:justify;font-size:15px}
+  p.txt:last-child{margin-bottom:0}
+  strong{font-weight:700}
+
+  /* Campos editáveis inline */
+  .f{
+    display:inline-block;min-width:90px;border-bottom:2px dotted var(--neon);
+    color:var(--roxo);font-weight:700;padding:0 4px;outline:none;
+    background:rgba(192,132,252,.08);border-radius:4px 4px 0 0;
+  }
+  .f:focus{background:rgba(192,132,252,.20);border-bottom-color:var(--roxo)}
+  .f:empty:before{content:attr(data-ph);color:#b9b0cc;font-weight:500}
+  .f.lg{min-width:160px}
+
+  /* Grelha de identificação */
+  .grid{display:grid;gap:10px}
+  .row{display:flex;flex-direction:column;gap:3px}
+  .row label{font-size:12px;color:var(--cinza);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .row .f{min-width:0;width:100%;display:block;font-size:15px;padding:7px 9px;border:1px solid var(--linha);
+    border-bottom:2px solid var(--neon);border-radius:9px;background:#faf8ff;color:var(--tinta);font-weight:600}
+  .row .f:empty:before{color:#c3bbd6;font-weight:500}
+
+  /* Opção de imagem */
+  .opt{display:flex;gap:10px;margin:8px 0;align-items:flex-start;cursor:pointer;
+    padding:12px;border:1px solid var(--linha);border-radius:12px;background:#faf8ff}
+  .opt input{margin-top:3px;width:18px;height:18px;accent-color:var(--roxo);flex:none}
+  .opt span{font-size:14px}
+
+  /* Assinaturas */
+  .assina{display:grid;grid-template-columns:1fr;gap:16px}
+  .pad-box{border:1px solid var(--linha);border-radius:14px;overflow:hidden;background:#fff}
+  .pad-head{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;
+    background:#faf8ff;font-size:12px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px}
+  .pad-head button{background:none;border:none;color:var(--roxo);font-weight:700;font-size:12px;cursor:pointer}
+  canvas.pad{display:block;width:100%;height:150px;touch-action:none;background:
+    repeating-linear-gradient(0deg,transparent,transparent 148px,#eee 149px)}
+  .pad-cap{text-align:center;font-size:12px;color:var(--cinza);padding:6px 0 12px;font-weight:600}
+
+  /* Barra de ações */
+  .barra{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);border-top:1px solid var(--linha);padding:12px 16px;
+    display:flex;gap:10px;justify-content:center;z-index:50}
+  .barra .inner{max-width:760px;width:100%;display:flex;gap:10px}
+  .btn{flex:1;border:none;border-radius:13px;padding:15px 16px;font-size:15px;font-weight:800;
+    cursor:pointer;font-family:inherit}
+  .btn.primary{background:linear-gradient(135deg,var(--roxo),var(--roxo2));color:#fff;
+    box-shadow:0 8px 22px rgba(124,58,237,.4)}
+  .btn.ghost{background:#efeafc;color:var(--roxo);flex:0 0 auto}
+  .aviso{font-size:12px;color:var(--cinza);text-align:center;margin:14px 4px 0}
+
+  /* Toast */
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);
+    background:var(--tinta);color:#fff;padding:12px 20px;border-radius:30px;font-size:14px;
+    font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%;text-align:center}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* Painel treinador */
+  details.treino{margin-top:16px;background:#2a1a4d;color:#fff;border-radius:14px;padding:4px 16px}
+  details.treino summary{cursor:pointer;font-weight:800;padding:12px 0;font-size:14px;list-style:none}
+  details.treino summary::-webkit-details-marker{display:none}
+  details.treino p{font-size:13px;opacity:.85;margin:0 0 12px}
+  details.treino .btn{width:100%;margin-bottom:14px}
+
+  /* IMPRESSÃO / PDF */
+  @media print{
+    @page{size:A4;margin:14mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.5}
+    .wrap{max-width:none;padding:0}
+    .barra,.treino,.aviso,.pad-head button,.toast{display:none!important}
+    .topo{background:none!important;color:#000;border-radius:0;box-shadow:none;padding:0 0 8px;
+      border-bottom:2px solid #6d28d9}
+    .topo .marca{color:#6d28d9}
+    .topo h1{font-size:16pt}
+    .card{box-shadow:none;border:none;border-radius:0;padding:0;margin-top:14px;break-inside:avoid}
+    .card h2{color:#000;font-size:11pt}
+    .card h2 .n{background:#6d28d9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .f{background:none!important;border-bottom:1px solid #555;color:#000;border-radius:0;font-weight:700}
+    .row .f{border:none;border-bottom:1px solid #555;background:none!important;padding:2px 0}
+    .f:empty:before{content:"";}
+    .opt{border:none;background:none!important;padding:2px 0}
+    .assina{grid-template-columns:1fr 1fr;gap:24px}
+    .pad-box{border:none}
+    .pad-head{background:none!important;padding:0;border-top:1px solid #000;justify-content:center}
+    canvas.pad{background:none!important;height:90px}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topo">
+    <div class="marca">Lucas Lima · Personal Trainer</div>
+    <h1>Contrato de Treino Personalizado</h1>
+    <p>Prestação de serviços de personal training presencial</p>
+  </div>
+
+  <!-- PARTES -->
+  <div class="card">
+    <h2><span class="n">1</span> Identificação das partes</h2>
+    <p class="txt"><strong>Personal Trainer (Prestador):</strong></p>
+    <div class="grid" style="margin-bottom:14px">
+      <div class="row"><label>Nome</label><span class="f" contenteditable data-field="pt_nome" data-ph="Lucas Lima">Lucas Lima</span></div>
+      <div class="row"><label>NIF</label><span class="f" contenteditable data-field="pt_nif" data-ph="número de contribuinte"></span></div>
+      <div class="row"><label>Morada profissional</label><span class="f" contenteditable data-field="pt_morada" data-ph="morada"></span></div>
+      <div class="row"><label>Telemóvel</label><span class="f" contenteditable data-field="pt_tel" data-ph="telemóvel"></span></div>
+      <div class="row"><label>Email</label><span class="f" contenteditable data-field="pt_email" data-ph="email">lucas.o.lima93@gmail.com</span></div>
+    </div>
+    <p class="txt"><strong>Cliente:</strong></p>
+    <div class="grid">
+      <div class="row"><label>Nome completo</label><span class="f" contenteditable data-field="cl_nome" data-ph="o teu nome"></span></div>
+      <div class="row"><label>Documento de identificação n.º</label><span class="f" contenteditable data-field="cl_doc" data-ph="CC / passaporte"></span></div>
+      <div class="row"><label>NIF</label><span class="f" contenteditable data-field="cl_nif" data-ph="número de contribuinte"></span></div>
+      <div class="row"><label>Morada</label><span class="f" contenteditable data-field="cl_morada" data-ph="morada"></span></div>
+      <div class="row"><label>Telemóvel</label><span class="f" contenteditable data-field="cl_tel" data-ph="telemóvel"></span></div>
+      <div class="row"><label>Email</label><span class="f" contenteditable data-field="cl_email" data-ph="email"></span></div>
+    </div>
+  </div>
+
+  <!-- OBJETO -->
+  <div class="card">
+    <h2><span class="n">2</span> Objeto</h2>
+    <p class="txt">O presente contrato tem por objeto a prestação, pelo Personal Trainer ao Cliente, de serviços de treino físico personalizado, em regime presencial, incluindo avaliação física, elaboração do plano de treino, acompanhamento técnico e respetivos ajustes.</p>
+    <p class="txt">Os serviços constituem uma obrigação de meios e não de resultado, dependendo o resultado também da assiduidade, empenho, alimentação, descanso e condições de saúde do Cliente.</p>
+  </div>
+
+  <!-- MODALIDADE -->
+  <div class="card">
+    <h2><span class="n">3</span> Modalidade, pacote e vigência</h2>
+    <p class="txt">As sessões realizam-se na modalidade/local: <span class="f lg" contenteditable data-field="local" data-ph="ginásio / parque / domicílio"></span>, com a duração de <span class="f" contenteditable data-field="duracao" data-ph="60"></span> minutos cada.</p>
+    <p class="txt">Pacote contratado: <span class="f lg" contenteditable data-field="pacote" data-ph="ex: 8 sessões / mês"></span>.</p>
+    <p class="txt">Início em <span class="f" contenteditable data-field="inicio" data-ph="data"></span>, pelo período de <span class="f" contenteditable data-field="vigencia" data-ph="ex: 1 mês"></span>, renovável por iguais períodos salvo aviso escrito em contrário.</p>
+  </div>
+
+  <!-- PAGAMENTO -->
+  <div class="card">
+    <h2><span class="n">4</span> Preço e pagamento</h2>
+    <p class="txt">Pela prestação dos serviços, o Cliente paga o valor de <strong>€ <span class="f" contenteditable data-field="valor" data-ph="0,00"></span></strong> referente ao pacote acima.</p>
+    <p class="txt"><strong>O pagamento é efetuado antecipadamente</strong>, na totalidade, antes do início de cada pacote ou ciclo de sessões. O acesso às sessões depende da regularização do pagamento; havendo atraso, as sessões podem ser suspensas até à liquidação.</p>
+    <p class="txt"><strong>Não há lugar a reembolso</strong> de sessões agendadas e não realizadas por causa imputável ao Cliente, nem de pacotes já iniciados, salvo o previsto na lei.</p>
+  </div>
+
+  <!-- FALTAS -->
+  <div class="card">
+    <h2><span class="n">5</span> Faltas, cancelamentos e remarcações</h2>
+    <p class="txt">O cancelamento ou remarcação de uma sessão deve ser comunicado com a antecedência mínima de <strong><span class="f" contenteditable data-field="antecedencia" data-ph="24"></span> horas</strong> face à hora marcada.</p>
+    <p class="txt"><strong>A sessão cancelada com menor antecedência, ou a falta sem aviso, considera-se dada</strong>, sendo descontada do pacote, sem direito a remarcação ou reembolso. Atrasos do Cliente não prolongam a sessão.</p>
+    <p class="txt">As sessões canceladas pelo Personal Trainer são remarcadas sem custo ou, em alternativa, reembolsadas.</p>
+  </div>
+
+  <!-- APTIDÃO -->
+  <div class="card">
+    <h2><span class="n">6</span> Aptidão física e responsabilidade</h2>
+    <p class="txt">O Cliente declara estar em condições de saúde adequadas à prática de exercício físico e ter informado o Personal Trainer de quaisquer condições clínicas, lesões, limitações ou medicação relevantes, comprometendo-se a comunicar qualquer alteração futura.</p>
+    <p class="txt">O Cliente reconhece que a prática de exercício envolve riscos inerentes e assume-os de forma livre e esclarecida. O Personal Trainer não se responsabiliza por lesões resultantes de informação incompleta/incorreta do Cliente ou do incumprimento das instruções técnicas.</p>
+  </div>
+
+  <!-- IMAGEM -->
+  <div class="card">
+    <h2><span class="n">7</span> Direito de imagem</h2>
+    <p class="txt">O Cliente decide sobre a captação e utilização da sua imagem (fotos/vídeos das sessões) para divulgação da atividade do Personal Trainer em redes sociais e materiais promocionais. Autorização gratuita e revogável por escrito a qualquer momento.</p>
+    <label class="opt"><input type="radio" name="imagem" value="autorizo"><span><strong>Autorizo</strong> a captação e utilização da minha imagem.</span></label>
+    <label class="opt"><input type="radio" name="imagem" value="nao"><span><strong>Não autorizo</strong> a captação e utilização da minha imagem.</span></label>
+  </div>
+
+  <!-- RGPD + FINAIS -->
+  <div class="card">
+    <h2><span class="n">8</span> Dados pessoais e disposições finais</h2>
+    <p class="txt">Os dados do Cliente são tratados apenas para execução do contrato, comunicação, faturação e obrigações legais (RGPD), podendo exercer os direitos de acesso, retificação, oposição e apagamento junto do Personal Trainer.</p>
+    <p class="txt">Qualquer das partes pode cessar o contrato mediante aviso escrito com <span class="f" contenteditable data-field="rescisao" data-ph="8"></span> dias de antecedência, sem prejuízo do pagamento de sessões realizadas. Alterações só são válidas por escrito. Para litígios, é competente o foro da comarca da morada profissional do Personal Trainer.</p>
+  </div>
+
+  <!-- ASSINATURAS -->
+  <div class="card">
+    <h2><span class="n">9</span> Local, data e assinaturas</h2>
+    <p class="txt">Feito em <span class="f" contenteditable data-field="cidade" data-ph="cidade"></span>, a <span class="f" contenteditable data-field="data" data-ph="data"></span>.</p>
+    <div class="assina">
+      <div>
+        <div class="pad-box">
+          <div class="pad-head"><span>O Personal Trainer</span><button type="button" onclick="limpar('padPT')">limpar</button></div>
+          <canvas class="pad" id="padPT"></canvas>
+        </div>
+        <div class="pad-cap">Lucas Lima</div>
+      </div>
+      <div>
+        <div class="pad-box">
+          <div class="pad-head"><span>O Cliente</span><button type="button" onclick="limpar('padCL')">limpar</button></div>
+          <canvas class="pad" id="padCL"></canvas>
+        </div>
+        <div class="pad-cap">Assina com o dedo</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="aviso">Ao assinar, o Cliente declara ter lido e aceite todas as cláusulas deste contrato.</p>
+
+  <!-- PAINEL TREINADOR (não aparece no PDF) -->
+  <details class="treino">
+    <summary>⚙️ Modo treinador (só pra ti, Lucas)</summary>
+    <p>Preenche os campos do contrato acima (valor, pacote, datas...) e depois gera um link já preenchido pra mandar ao aluno. O aluno só completa os dados dele e assina.</p>
+    <button class="btn primary" type="button" onclick="gerarLink()">🔗 Gerar link pro aluno</button>
+  </details>
+
+</div>
+
+<!-- AÇÕES -->
+<div class="barra">
+  <div class="inner">
+    <button class="btn ghost" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+    <button class="btn primary" type="button" onclick="window.print()">📄 Guardar como PDF</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ---- Assinatura no dedo ----
+  function initPad(id){
+    const c=document.getElementById(id), ctx=c.getContext('2d');
+    function fit(){
+      const r=c.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+      const data=c.width? ctx.getImageData(0,0,c.width,c.height):null;
+      c.width=r.width*dpr; c.height=r.height*dpr; ctx.scale(dpr,dpr);
+      ctx.lineWidth=2.4; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#1c1430';
+      if(data) ctx.putImageData(data,0,0);
+    }
+    fit(); window.addEventListener('resize',fit);
+    let drawing=false;
+    function pos(e){const r=c.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+    function start(e){drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault();}
+    function move(e){if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault();}
+    function end(){drawing=false;}
+    c.addEventListener('pointerdown',start); c.addEventListener('pointermove',move);
+    window.addEventListener('pointerup',end);
+    c._clear=()=>ctx.clearRect(0,0,c.width,c.height);
+  }
+  function limpar(id){document.getElementById(id)._clear();}
+  initPad('padPT'); initPad('padCL');
+
+  // ---- Pré-preencher via link ----
+  const fields=[...document.querySelectorAll('[data-field]')];
+  const params=new URLSearchParams(location.search);
+  fields.forEach(el=>{const v=params.get(el.dataset.field); if(v!==null) el.textContent=v;});
+  if(params.get('imagem')){
+    const r=document.querySelector('input[name=imagem][value="'+params.get('imagem')+'"]'); if(r) r.checked=true;
+  }
+  // data automática se vazia
+  const dataEl=document.querySelector('[data-field=data]');
+  if(dataEl && !dataEl.textContent.trim()){
+    dataEl.textContent=new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'});
+  }
+
+  // ---- Gerar link pro aluno ----
+  function gerarLink(){
+    const u=new URL(location.href.split('?')[0]);
+    fields.forEach(el=>{const t=el.textContent.trim(); if(t && el.dataset.ph!==t) u.searchParams.set(el.dataset.field,t);});
+    const img=document.querySelector('input[name=imagem]:checked'); if(img) u.searchParams.set('imagem',img.value);
+    const link=u.toString();
+    navigator.clipboard.writeText(link).then(()=>toast('✓ Link copiado! Cola no DM/WhatsApp do aluno.'))
+      .catch(()=>toast(link));
+  }
+  function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
+    clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3500);}
+</script>
+</body>
+</html>
